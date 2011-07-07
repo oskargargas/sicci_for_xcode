@@ -77,6 +77,8 @@ public class XcodebuildCommandCaller {
 			
 			boolean rcode = call(launcher, envVars, listener, workspace, args);
 			
+			listener.getLogger().println("\n[DEBUG]: " + rcode);
+			
 			Vector<OCUnitTestSuite> testSuites = outputStream.getParsedTests();
 			
 			if(testSuites.size() == 0)
@@ -87,7 +89,9 @@ public class XcodebuildCommandCaller {
 			if(!testReports.exists())
 				testReports.mkdirs();
 			
-			return testReports.act(new OCUnitToJUnitWriterCallable(testSuites));
+			testReports.act(new OCUnitToJUnitWriterCallable(testSuites));
+			
+			return true;
 		} catch (Exception e) {
 		}
 
